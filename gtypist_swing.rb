@@ -42,7 +42,7 @@ end
 
 class MyApp
   def initialize
-    frame=JFrame.new("gtypist today")
+    frame=JFrame.new("gtypist")
     frame.set_default_close_operation(JFrame::EXIT_ON_CLOSE)
     panel=JPanel.new
 
@@ -64,11 +64,7 @@ end
 # main starts here.
 #
 begin
-  if DEBUG
-    fname=File.join(ENV['HOME'],'.gtypist')
-  else # isc
-    fname=File.join("/home/t/hkimura/literacy/gtypist",ENV['USER'])
-  end
+  fname=File.join(ENV['HOME'],'.gtypist')
 # 起動直後にはまだファイルがないときもある。
 #  raise "記録が見つかりません。#{fname}" unless File.exists?(fname)
 
@@ -84,7 +80,7 @@ begin
       #    debug line
       wday,month,date,time,year,rest=line.chomp.split(/\s+/,6)
       unless now.day.to_i == date.to_i
-        debug "not match: #{line}"
+        debug "not today: #{line}"
         next
       end
       if flag
