@@ -1,0 +1,6 @@
+2013-03-18  Hiroshi Kimura  <hiroshi.kimura.0331@gmail.com>
+
+	* src/gtypist.c: /home/t/hkimura/以下ではなく、${HOME}/.gtypist に
+	記録を残す。
+
+	* gtypist_tk.rb: 

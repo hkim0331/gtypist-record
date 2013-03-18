@@ -1,0 +1,139 @@
+*** gtypist-2.9.2.orig/src/Makefile	2013-03-18 11:34:11.900714466 +0900
+--- gtypist-2.9.2/src/Makefile	2013-03-18 11:32:48.890232972 +0900
+***************
+*** 148,154 ****
+  CPPFLAGS = 
+  CYGPATH_W = echo
+  DATADIRNAME = share
+! DEFS = -DHAVE_CONFIG_H
+  DEPDIR = .deps
+  ECHO_C = 
+  ECHO_N = -n
+--- 148,154 ----
+  CPPFLAGS = 
+  CYGPATH_W = echo
+  DATADIRNAME = share
+! DEFS = -DHAVE_CONFIG_H -DHKIM
+  DEPDIR = .deps
+  ECHO_C = 
+  ECHO_N = -n
+*** gtypist-2.9.2.orig/src/gtypist.c	2013-03-18 11:32:31.378557669 +0900
+--- gtypist-2.9.2/src/gtypist.c	2013-03-18 11:32:55.978102986 +0900
+***************
+*** 54,59 ****
+--- 54,62 ----
+  #include "gettext.h"
+  #define _(String) gettext (String)
+  
++ #ifdef HKIM
++ #include <sys/stat.h>
++ #endif
+  /* VERSION and PACKAGE defined in config.h */
+  
+  char *COPYRIGHT;
+***************
+*** 227,232 ****
+--- 230,294 ----
+  			    const char *excersise_label, double adjusted_cpm );
+  void get_bestlog_filename( char *filename );
+  
++ // for gtypist+record
++ #ifdef HKIM
++ char *chomp(char *line)
++ {
++         char *s;
++ 
++         for (s=line; *s != '\0'; s++) {
++                 if (*s=='\n') {
++                         *s = '\0';
++                 }
++         }
++         return line;
++ }
++ 
++ char *strip(char *line)
++ {
++         char *s;
++ 	char *t,*u;
++ 	
++         s=line;
++         while (isblank(*s)) {
++                 s++;
++         }
++ 	t=s;
++ 	u='\0';
++ 	while (*t!='\0') {
++ 		if (isblank(*t)) {
++ 			u=t;
++ 		} else {
++ 			u='\0';
++ 		}
++ 		t++;
++ 	}
++ 	if (u!='\0') {
++ 		*u='\0';
++ 	}
++         return s;
++ }
++ 
++ void gtypist_log(char *line)
++ {
++         FILE *fp;
++         char logf[256];
++         time_t tloc;
++ 	
++ 	sprintf(logf,"%s/.gtypist",getenv("HOME"));
++         if ((fp=fopen(logf,"a"))==(FILE *)NULL) {
++                 fprintf(stderr,"can not open %s\n",logf);
++                 exit(1);
++         }
++         if (time(&tloc)==-1) {
++                 fprintf(stderr,"error in time()\n");
++                 exit(1);
++         }
++         fprintf(fp,"%s %s\n",chomp(ctime(&tloc)),line);
++         fclose(fp);
++ }
++ #endif
++ 
+  // Display the top banner with the given text
+  void banner (const char *text)
+  {
+***************
+*** 489,494 ****
+--- 551,559 ----
+        move( line++, COLS - utf8len( SPEED_BEST_NEW_MSG ) - 1 );
+        ADDSTR_REV( SPEED_BEST_NEW_MSG );
+      }
++ #ifdef HKIM
++   gtypist_log(strip(message));
++ #endif
+  }
+  
+  /*
+***************
+*** 1566,1571 ****
+--- 1631,1641 ----
+    /* just handle lines until the end of the file */
+    while( ! feof( script ))
+      {
++ #ifdef HKIM
++ 	    if (strncmp(line, "*:",2)==0) {
++ 		    gtypist_log(line);
++ 	    }
++ #endif
+        command = SCR_COMMAND( line );
+        switch( command )
+  	{
+***************
+*** 1919,1924 ****
+--- 1989,1997 ----
+  	  printf( "%s %s\n\n", PACKAGE,VERSION );
+  	  printf( "%s\n\n", COPYRIGHT );
+  	  printf( "%s\n", _("Written by Simon Baldwin"));
++ #ifdef HKIM
++ 	  printf( "\nadd training record facility by hkim.\n");
++ #endif
+  	  exit( 0 );
+  	  break;
+  	case 'S':
