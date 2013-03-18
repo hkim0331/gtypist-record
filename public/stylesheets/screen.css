@@ -1,0 +1,10 @@
+header {
+    color: white;
+    background: purple;
+    font-size: 24pt;
+    font-weight: bold;
+    }
+
+footer {
+    border-top: 1pt solid gray;
+    }
