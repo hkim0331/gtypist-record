@@ -5,17 +5,11 @@
 # 本日の gtypist のスコアを表示する学生向けスクリプト。
 #
 # TODO: 2012-04-25, クリアしたステージを刻々と表示するように。
-# 	=> done 2012-05-03.
+#  => done 2012-05-03.
 #
-# this is a part of icome4/utils
-# VERSION: 0.6.6
+# isc で実行すると非常に遅い、か? 再チェック。
 #
-# isc で実行すると非常に遅い。
-# tk で書き直し。
-#
-# JRuby can not.
-#DEBUG=(RUBY_PLATFORM=~/darwin/)
-DEBUG=File.directory?("/Applications")
+DEBUG=true
 INTERVAL=5
 
 include Java
@@ -42,6 +36,7 @@ end
 
 class MyApp
   def initialize
+    @displayed=Hash.new
     frame=JFrame.new("gtypist")
     frame.set_default_close_operation(JFrame::EXIT_ON_CLOSE)
     panel=JPanel.new
@@ -56,51 +51,48 @@ class MyApp
     frame.set_visible(true)
   end
 
-  def update(data)
-    @text_area.set_text(data.reverse.join("\n"))
-  end
-end
-#
-# main starts here.
-#
-begin
-  fname=File.join(ENV['HOME'],'.gtypist')
-# 起動直後にはまだファイルがないときもある。
-#  raise "記録が見つかりません。#{fname}" unless File.exists?(fname)
-
-  now=Time.now
-  app=MyApp.new
-  results=Array.new
-
-  while true
-    flag=cleared=rate=nil
-    sleep(INTERVAL)
-    next unless File.exists?(fname)
-    IO.readlines(fname).reverse.each do |line|
-      #    debug line
-      wday,month,date,time,year,rest=line.chomp.split(/\s+/,6)
-      unless now.day.to_i == date.to_i
-        debug "not today: #{line}"
+  def update(records)
+    records.each do |r|
+      debug "record:#{r}"
+      if @displayed.member?(r)
         next
-      end
-      if flag
-        #      debug "found, rest:#{rest}"
-        next unless rest=~/\*:(.*)$/
-        #      debug "found2"
-        score=$1
-        results.push "#{cleared} #{score}" if score=~/_.+_.+_/
-        flag=cleared=rate=nil
       else
-        if rest=~/with (\d)\.(\d)% errors/
-          rate="#{$1}.#{$2}".to_f
-          if rate < 3.0
-            cleared="#{year}-#{M[month]}-#{D(date)} #{time}"
-            flag=true
-          end
-        end
+        @text_area.append(r+"\n")
+        @displayed[r]=true
       end
     end
-    app.update(results)
+  end
+end
+
+def cleared_stages(fname)
+  ret=Array.new
+  last_stage=""
+  File.foreach(fname) do |line|
+    line=line.chomp
+    wday,month,date,time,year,rest=line.split(/\s+/,6)
+    if rest=~/with (\d+)\.(\d+)%/
+      if "#{$1}.#{$2}".to_f <= 3.0
+        ret.push last_stage
+      end
+    else
+      last_stage=line
+    end
+  end
+  ret
+end
+
+# main starts here.
+
+begin
+  app=MyApp.new
+  fname = File.join(ENV['HOME'],'.gtypist')
+  while not File.exists?(fname)
+    sleep(INTERVAL)
+  end
+  while true
+    stages = cleared_stages(fname)
+    app.update(stages)
+    sleep(INTERVAL)
   end
 
 rescue =>e
