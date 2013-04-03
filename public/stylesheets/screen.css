@@ -3,8 +3,16 @@ header {
     background: purple;
     font-size: 24pt;
     font-weight: bold;
-    }
+}
+
+body {
+    font-family: sans-serif;
+}
+
+p, pre {
+    margin-left: 2em;
+}
 
 footer {
     border-top: 1pt solid gray;
-    }
+}

@@ -1,3 +1,11 @@
+;-*- mode: outline; coding: utf-8; -*-
+
+* 2013-04-02, インストールの方法。
+
+* gtypist upload 機能。
+
+* gtypist をスタート時に自動起動し、gtypist を終了したらビューアも消えるように。
+
 * gtypist_tk.rb から記録をアップロードする。
 
 * gtypist_tk.rb のムダループはなくせるか？
@@ -5,6 +13,8 @@
 * osx でビルド出来ない。
 -e Error:  both library and header files for the ncursesw library
  are required to build this package.  See INSTALL file for further information. On Debian/Ubuntu you need to install libncursesw5-dev.
+
+ => (solved) Homebrew のパッチを入れる。
  
 
 

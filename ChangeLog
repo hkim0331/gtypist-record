@@ -3,4 +3,4 @@
 	* src/gtypist.c: /home/t/hkimura/以下ではなく、${HOME}/.gtypist に
 	記録を残す。
 
-	* gtypist_tk.rb: 
+	* gtypist_tk.rb:
