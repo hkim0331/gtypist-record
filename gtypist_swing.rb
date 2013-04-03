@@ -2,6 +2,8 @@
 # -*- mode: ruby; coding: utf-8 -*-
 # programmed by Hiroshi Kimura, 2012-04-22.
 #
+# VERSION:
+#
 # 本日の gtypist のスコアを表示する学生向けスクリプト。
 #
 # TODO: 2012-04-25, クリアしたステージを刻々と表示するように。

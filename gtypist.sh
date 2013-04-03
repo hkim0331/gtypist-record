@@ -5,6 +5,8 @@
 # 記録を残すように改造した gtypist と共に viewer を立ち上げ、
 # gtypist の終了とともに viewer を終わらす。
 # VIEWER, TYPIST を正しく設定すること。
+#
+# VERSION:
 
 if [ -d /home/t ]; then
     VIEWER=/edu/bin/gtypist_swing.rb
