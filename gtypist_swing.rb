@@ -9,7 +9,7 @@
 #
 # isc で実行すると非常に遅い、か? 再チェック。
 #
-DEBUG=true
+DEBUG=false
 INTERVAL=5
 
 include Java
@@ -51,6 +51,7 @@ class MyApp
     frame.set_visible(true)
   end
 
+  # FIXME: icome にアップロード。
   def update(records)
     records.each do |r|
       debug "record:#{r}"
@@ -82,7 +83,6 @@ def cleared_stages(fname)
 end
 
 # main starts here.
-
 begin
   app=MyApp.new
   fname = File.join(ENV['HOME'],'.gtypist')
