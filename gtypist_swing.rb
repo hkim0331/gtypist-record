@@ -2,6 +2,8 @@
 # -*- mode: ruby; coding: utf-8 -*-
 # programmed by Hiroshi Kimura, 2012-04-22.
 #
+# VERSION:
+#
 # 本日の gtypist のスコアを表示する学生向けスクリプト。
 #
 # TODO: 2012-04-25, クリアしたステージを刻々と表示するように。
@@ -41,7 +43,7 @@ class MyApp
     frame.set_default_close_operation(JFrame::EXIT_ON_CLOSE)
     panel=JPanel.new
 
-    @text_area=JTextArea.new(20,20)
+    @text_area=JTextArea.new(20,25)
     @text_area.set_editable(false)
     sc=JScrollPane.new
     sc.setViewportView(@text_area)

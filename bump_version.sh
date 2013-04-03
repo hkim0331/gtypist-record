@@ -8,16 +8,12 @@ fi
 VERSION=$1
 
 # files to footprint version number.
-FILES="Makefile bashrc bash_profile "
+FILES="gtypist.sh gtypist_swing.rb"
 
 # normally, format of comments are '# VERSION: number'.
 for i in ${FILES}; do
     sed -i.bak "s/^# VERSION:.*$/# VERSION: ${VERSION}/" $i
 done
 
-# special format example.
-sed -i.bak "s/VERSION:\s*.*$/VERSION: ${VERSION}/" emacs.d/init.el
-
 # record the version number.
 echo ${VERSION} > VERSION
-echo ${VERSION} > emacs.d/VERSION
