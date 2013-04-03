@@ -41,7 +41,7 @@ class MyApp
     frame.set_default_close_operation(JFrame::EXIT_ON_CLOSE)
     panel=JPanel.new
 
-    @text_area=JTextArea.new(20,20)
+    @text_area=JTextArea.new(20,25)
     @text_area.set_editable(false)
     sc=JScrollPane.new
     sc.setViewportView(@text_area)

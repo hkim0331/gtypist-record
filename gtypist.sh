@@ -6,9 +6,13 @@
 # gtypist の終了とともに viewer を終わらす。
 # VIEWER, TYPIST を正しく設定すること。
 
-
-VIEWER=/edu/bin/gtypist_swing.rb
-TYPIST=/edu/bin/gtypist.raw
+if [ -d /home/t ]; then
+    VIEWER=/edu/bin/gtypist_swing.rb
+    TYPIST=/edu/bin/gtypist.raw
+else
+    VIEWER=./gtypist_swing.rb
+    TYPIST=gtypist-2.9.2/src/gtypist
+fi
 
 # 以下は変更の必要なし。
 ${VIEWER} &
