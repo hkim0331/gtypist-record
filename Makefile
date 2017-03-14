@@ -10,7 +10,7 @@ gtypist:
 
 clean:
 	cd ${VERSION} && make clean
-	${RM} *~
+	${RM} *~ *.bak
 
 realclean:
 	${RM} -rf ${VERSION}
