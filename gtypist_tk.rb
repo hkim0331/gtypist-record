@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#!/edu/bin/ruby
 # -*- mode: ruby; coding: utf-8 -*-
 # programmed by Hiroshi Kimura, 2012-04-22.
 #
@@ -6,7 +6,7 @@
 # jruby で遅すぎるので、tk で書き直し。
 #
 # TODO: 2012-04-25, クリアしたステージを刻々と表示するように。
-# 	=> done 2012-05-03.
+# => done 2012-05-03.
 #
 # VERSION: 0.6.6
 #
