@@ -1,4 +1,4 @@
-#!/usr/bin/env dash
+#!/bin/sh
 #-*- mode: shell-script; coding: utf-8; -*-
 # programmed by Hiroshi Kimura, 2013-03-22.
 #
@@ -6,7 +6,7 @@
 # gtypist の終了とともに viewer を終わらす。
 # VIEWER, TYPIST を正しく設定すること。
 #
-# VERSION:
+# VERSION: 0.3
 
 if [ -d /home/t ]; then
     VIEWER=/edu/bin/gtypist_swing.rb
