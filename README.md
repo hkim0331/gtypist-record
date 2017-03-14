@@ -56,14 +56,16 @@ $ make install
 
 * gtypist_tk.rb のムダループはなくせるか？
 
-
 * (solved) osx でビルド出来ない。
 
-    Homebrew のパッチを入れる。(どんなパッチ？)
+    => Homebrew のパッチを入れる。(どんなパッチ？)
 
-    -e Error:  both library and header files for the ncursesw library
-    are required to build this package.  See INSTALL file for further
-    information. On Debian/Ubuntu you need to install libncursesw5-dev.
+        Error:  both library and header files for the ncursesw library
+        are required to build this package.  See INSTALL file for further
+        information. On Debian/Ubuntu you need to install libncursesw5-dev.
+
+
+  
 
 ---
 programmed by Hiroshi Kimura, 2013-03-22.
